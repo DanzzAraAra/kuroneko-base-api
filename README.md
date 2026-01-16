@@ -43,8 +43,8 @@ Struktur folder disusun agar mudah dipahami dan dimodifikasi:
 
 ```text
 .
-├── index.ts                   # Entry point utama server (TypeScript source)
-├── dist/                      # 📂 Compiled JavaScript files (Production)
+├── index.ts                   # Entry point utama server
+├── dist/                      # Compiled JavaScript files (Production)
 │   ├── index.js               # Compiled main server file
 │   ├── src/                   # Compiled source files & configs
 │   └── router/                # Compiled route handlers
