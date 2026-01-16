@@ -1,12 +1,15 @@
-KuroNeko API
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 
-Simple, Fast, and Dynamic REST API Base built with Express & TypeScript.
+# KuroNeko API
 
-demo: https://kuronekoapy.vercel.app
+> Simple, Fast, and Dynamic REST API Base built with Express & TypeScript.
 
-Rest Api: https://nekoapy.zone.id
+> demo: https://kuronekoapy.vercel.app
 
-Project ini adalah template dasar untuk membuat REST API yang modern, rapi, dan mudah dikembangkan. Dilengkapi dengan Auto-Load Router berbasis konfigurasi JSON, penghitung pengunjung (visitor counter), dan antarmuka dokumentasi (Docs UI) yang aesthetic.
+> Rest Api: https://nekoapy.zone.id
+
+Project ini adalah template dasar untuk membuat REST API yang modern, rapi, dan mudah dikembangkan. 
+Dilengkapi dengan Auto-Load Router berbasis konfigurasi JSON, penghitung pengunjung (visitor counter), dan antarmuka dokumentasi (Docs UI) yang aesthetic.
 
 ✨ Fitur Utama
 
