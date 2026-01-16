@@ -28,8 +28,8 @@ Project ini dirancang untuk mengatasi kerumitan setup awal dengan menyediakan fi
 | Fitur | Deskripsi |
 | :--- | :--- |
 | 🚀 **TypeScript** | Coding lebih aman, rapi, dan minim bug dengan static typing. |
-| ⚙️ **Dynamic Routing** | Tambah endpoint via `src/config.json` tanpa perlu menyentuh `index.ts`. |
-| 📖 **Auto Documentation** | Halaman `/docs` otomatis ter-generate berdasarkan config yang kamu buat. |
+| ⚙️ **Dynamic Routing** | Tambah endpoint via `src/config.json` tanpa perlu mengubah `index.ts`. |
+| 📖 **Auto Documentation** | Halaman `/docs` otomatis tergenerate berdasarkan config yang di buat. |
 | 🎨 **Modern UI** | Tampilan Landing page & Docs yang bersih, modern, dan responsif. |
 | 📊 **Visitor Counter** | Database JSON sederhana untuk melacak traffic API. |
 | 📂 **Modular Structure** | Susunan folder dikelompokkan rapi berdasarkan kategori. |
@@ -48,24 +48,24 @@ Struktur folder disusun agar mudah dipahami dan dimodifikasi:
 │   ├── index.js               # Compiled main server file
 │   ├── src/                   # Compiled source files & configs
 │   └── router/                # Compiled route handlers
-├── public/                    # 🎨 Frontend static files
+├── public/                    # Frontend files
 │   ├── 404.html
-│   ├── docs.html              # Halaman dokumentasi API
+│   ├── docs.html              # Halaman docs API
 │   ├── landing.html           # Halaman utama
 │   └── ...
-├── router/                    # 🔌 Folder Endpoint (Kategori - TypeScript)
-│   ├── ai/                    # Endpoint kategori AI
-│   ├── download/              # Endpoint kategori Downloader
-│   ├── maker/                 # Endpoint kategori Maker
-│   ├── random/                # Endpoint kategori Random
-│   ├── search/                # Endpoint kategori Search
-│   └── tools/                 # Endpoint kategori Tools
-├── src/                       # 🧠 Source files & Logic
+├── router/                    # Folder Endpoint (Kategori - TypeScript)
+│   ├── ai/
+│   ├── download/
+│   ├── maker/
+│   ├── random/
+│   ├── search/
+│   └── tools/
+├── src/                       # Source files & Logic
 │   ├── autoload.ts            # Logic auto load router
-│   ├── config.json            # ⚙️ KONFIGURASI ROUTER UTAMA
+│   ├── config.json            # Configuration router
 │   ├── logger.ts
 │   └── ...
-├── package.json               # Project dependencies & scripts
+├── package.json               # dependencies & scripts
 ├── tsconfig.json              # TypeScript configuration
 └── vercel.json                # Vercel deployment config
 ```
