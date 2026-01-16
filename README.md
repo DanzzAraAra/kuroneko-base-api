@@ -119,14 +119,12 @@ Berikut adalah penjelasan script yang ada di package.json:
 ```json
 {
   "scripts": {
-    "clean": "rm -rf dist",                      // Menghapus folder dist lama
-    "prebuild": "npm run clean",                 // Dijalankan otomatis sebelum build
-    "build": "tsc && npm run copy-assets",       // Kompilasi TS & Salin Assets
-    "copy-assets": "ts-node tools/copyAssets.ts",// Logic menyalin file non-TS ke dist
-    "start": "node dist/index.js",               // Menjalankan server production
-    "dev": "ts-node index.ts",                   // Menjalankan mode dev standar
-    "pm2": "pm2 start dist/index.js --name 'kuroneko-api'", // Jalankan via PM2
-    "stop": "pm2 stop kuroneko-api"              // Hentikan PM2
+    "clean": "rm -rf dist",                // Hapus folder build lama
+    "build": "tsc && npm run copy-assets", // Compile TS & copy file pendukung
+    "copy-assets": "...",                  // Copy .json, .jpg, dan public folder ke dist
+    "start": "node dist/index.js",         // Jalankan mode Production (JS)
+    "dev": "ts-node index.ts",             // Jalankan mode Development (TS)
+    "pm2": "pm2 start index.ts ...",       // Jalankan di background (Support TypeScript langsung)
   }
 }
 ```
