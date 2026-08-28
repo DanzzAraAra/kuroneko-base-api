@@ -14,7 +14,7 @@
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </p>
 
-[Demo Website](https://your-demo-link.com) • [REST API](https://your-api-link.com) • [Bug Report](https://github.com/DanzzAraAra/kuroneko-base-api/issues)
+[Demo Website](https://kuronekoapy.vercel.app) • [REST API](https://sylvatica.my.id) • [Bug Report](https://github.com/DanzzAraAra/kuroneko-base-api/issues)
 
 </div>
 
