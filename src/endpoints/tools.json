@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Short URL",
+    "endpoint": "/api/tools/shorturl",
+    "filename": "shorturl",
+    "method": "GET",
+    "params": [
+      {
+        "name": "url",
+        "required": true,
+        "description": "Original URL"
+      },
+      {
+        "name": "alias",
+        "required": false,
+        "description": "Custom Alias"
+      }
+    ]
+  }
+]

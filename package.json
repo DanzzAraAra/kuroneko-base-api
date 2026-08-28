@@ -1,0 +1,40 @@
+{
+  "name": "kuroneko",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc && npm run copy-assets",
+    "copy-assets": "mkdir -p dist/src/endpoints dist/router && cp -r src/*.json src/*.jpg dist/src/ 2>/dev/null || true && cp -r src/endpoints/*.json dist/src/endpoints/ 2>/dev/null || true && cp -r public dist/ 2>/dev/null || true",
+    "start": "node dist/index.js",
+    "dev": "ts-node index.ts",
+    "dev:watch": "nodemon --exec ts-node index.ts",
+    "pm2": "pm2 start index.ts --name kuroneko --interpreter node --node-args=\"-r ts-node/register\" && pm2 save"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.38.3",
+    "axios": "^1.6.0",
+    "axios-cookiejar-support": "^5.0.0",
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.2",
+    "file-type": "^16.5.4",
+    "form-data": "^4.0.0",
+    "jimp": "^0.22.10",
+    "tough-cookie": "^4.1.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/crypto-js": "^4.2.1",
+    "@types/express": "^4.17.21",
+    "@types/form-data": "^2.5.0",
+    "@types/node": "^20.10.0",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  }
+}

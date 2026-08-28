@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>KuroNeko | Documents</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="blob w-[420px] h-[420px] bg-purple-300/25 top-[-8%] left-[10%]"></div>
+    <div class="blob w-[380px] h-[380px] bg-blue-300/25 top-[20%] right-[5%]"></div>
+    <div class="blob w-[460px] h-[460px] bg-teal-200/20 bottom-[-10%] left-[25%]"></div>
+</div>
+
+<header id="site-header" class="site-header">
+    <div class="max-w-7xl mx-auto px-5 h-20 flex items-center gap-4 justify-between">
+        <button id="menu-toggle" class="clay-icon-btn" aria-label="Buka menu" aria-expanded="false" aria-controls="sidebar">
+            <i class="fa-solid fa-bars text-sm"></i>
+        </button>
+
+        <div class="flex-1 min-w-0">
+            <h1 id="nav-title" class="font-black text-lg tracking-tight leading-none truncate" style="color:#1E1B4B">KURONEKO</h1>
+            <span class="text-[10px] font-bold tracking-widest" style="color:#A78BFA">API PLATFORM</span>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+            <a href="/" class="clay-icon-btn" aria-label="Kembali ke Beranda">
+                <i class="fa-solid fa-house text-sm"></i>
+            </a>
+
+            <a href="https://github.com/DanzzAraAra" target="_blank" rel="noopener" class="clay-icon-btn" aria-label="Source Code">
+                <i class="fa-brands fa-github text-lg" style="color:#1E1B4B"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+<aside id="sidebar" class="sidebar" aria-hidden="true">
+    <div class="flex items-center justify-between pb-4 mb-4 border-b border-dashed" style="border-color:rgba(30,27,75,.14)">
+        <div>
+            <h2 class="font-black text-base" style="color:#1E1B4B">Endpoints</h2>
+            <span class="text-[10px] font-bold tracking-widest" style="color:#A78BFA">PILIH UNTUK MENCOBA</span>
+        </div>
+
+        <button id="sidebar-close" class="clay-icon-btn" aria-label="Tutup menu">
+            <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+    </div>
+
+    <div class="relative mb-4">
+        <input type="text" id="search-input" placeholder="Cari endpoint..." class="clay-input pl-11 h-11">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-xs" style="color:#A78BFA"></i>
+    </div>
+
+    <div id="sidebar-tree" class="flex-1 overflow-y-auto flex flex-col gap-2 pr-1"></div>
+
+    <div id="no-results" class="hidden flex-col items-center justify-center py-8 text-center">
+        <i class="fa-solid fa-magnifying-glass text-2xl mb-2" style="color:#C4B5FD"></i>
+        <p class="font-bold text-sm" style="color:#1E1B4B">Endpoint tidak ditemukan</p>
+    </div>
+
+    <div class="pt-3 mt-3 border-t border-dashed text-center" style="border-color:rgba(30,27,75,.16)">
+        <p class="font-mono text-[10px] font-semibold uppercase tracking-widest" style="color:#94A3B8">
+            Powered by <span style="color:#6D28D9">Danzz</span> &bull; 2026
+        </p>
+    </div>
+</aside>
+
+<main class="flex-grow max-w-7xl mx-auto w-full px-5 py-8 grid lg:grid-cols-12 gap-8 items-start relative z-10">
+
+    <aside class="lg:col-span-4 lg:sticky lg:top-24 flex flex-col gap-6 h-fit min-w-0">
+        <div class="clay-console reveal">
+            <div class="clay-console-screen flex flex-col h-[380px] overflow-hidden">
+                <div class="px-4 py-3 flex items-center gap-2 border-b border-white/10">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full" style="background:#FB7185"></div>
+                        <div class="w-3 h-3 rounded-full" style="background:#FCD34D"></div>
+                        <div class="w-3 h-3 rounded-full" style="background:#34D399"></div>
+                    </div>
+
+                    <span class="flex-1 text-center text-[10px] font-bold tracking-widest text-slate-400">
+                        root@kuroneko ~
+                    </span>
+                </div>
+
+                <div id="term-logs" class="font-mono p-4 text-[11px] overflow-y-auto flex-1 space-y-1.5 leading-relaxed"></div>
+
+                <div id="term-input-line" class="hidden px-4 pb-3 pt-2 border-t border-white/10 font-mono">
+                    <span class="text-emerald-400 font-bold mr-2">➜</span>
+                    <span class="text-sky-400 font-bold mr-2">~</span>
+                    <span class="inline-block w-2 h-4 bg-slate-400 align-middle blink-cursor"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="clay-card p-5 reveal">
+            <div class="flex flex-col gap-3">
+
+                <div class="flex justify-between items-center rounded-2xl p-3.5" style="background:#F5F3FF">
+                    <span class="flex items-center gap-2 text-xs font-bold" style="color:#64748B">
+                        <i class="fa-regular fa-clock" style="color:#60A5FA"></i>
+                        WAKTU (WIB)
+                    </span>
+                    <span id="server-time" class="font-mono font-black text-sm" style="color:#1E1B4B">--:--:--</span>
+                </div>
+
+                <div class="flex justify-between items-center rounded-2xl p-3.5" style="background:#F5F3FF">
+                    <span class="flex items-center gap-2 text-xs font-bold" style="color:#64748B">
+                        <i class="fa-regular fa-calendar" style="color:#60A5FA"></i>
+                        TANGGAL
+                    </span>
+                    <span id="server-date" class="font-mono font-bold text-sm" style="color:#1E1B4B">--/--/----</span>
+                </div>
+
+                <div class="flex justify-between items-center rounded-2xl p-3.5" style="background:#F5F3FF">
+                    <span class="flex items-center gap-2 text-xs font-bold" style="color:#64748B">
+                        <i class="fa-solid fa-battery-half" style="color:#A78BFA"></i>
+                        BATERAI
+                    </span>
+                    <span id="stat-battery" class="font-black text-sm font-mono" style="color:#6D28D9">--%</span>
+                </div>
+
+                <div class="flex justify-between items-center rounded-2xl p-3.5" style="background:#F5F3FF">
+                    <span class="flex items-center gap-2 text-xs font-bold" style="color:#64748B">
+                        <i class="fa-solid fa-mobile-screen" style="color:#A78BFA"></i>
+                        DEVICE
+                    </span>
+                    <span id="stat-device" class="font-black text-sm" style="color:#6D28D9">Unknown</span>
+                </div>
+
+            </div>
+        </div>
+    </aside>
+
+    <section class="lg:col-span-8 min-h-[50vh] w-full min-w-0">
+        <div id="intro-view" class="clay-card p-7 reveal"></div>
+        <div id="endpoint-view" class="hidden flex-col gap-4"></div>
+    </section>
+
+</main>
+
+<div id="custom-toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-32 opacity-0 transition-all duration-300">
+    <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl" style="background:#1E1B4B;box-shadow:0 8px 0 0 #12103A,0 16px 30px rgba(0,0,0,.25)">
+        <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background:rgba(52,211,153,.2);color:#34D399">
+            <i class="fa-solid fa-check text-xs"></i>
+        </div>
+
+        <span id="toast-message" class="tracking-wide text-white font-bold text-sm">
+            SUCCESS
+        </span>
+    </div>
+</div>
+
+<script src="/docs/docs.js"></script>
+</body>
+</html>

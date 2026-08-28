@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Random Blue Archive",
+    "endpoint": "/api/random/blue_archive",
+    "filename": "blue_archive",
+    "method": "GET",
+    "params": []
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Youtube Search",
+    "endpoint": "/api/search/yts",
+    "filename": "yts",
+    "method": "GET",
+    "params": [
+      {
+        "name": "q",
+        "required": true,
+        "description": "Query"
+      }
+    ]
+  },
+  {
+    "name": "Pinterest Search",
+    "endpoint": "/api/search/pinterest",
+    "filename": "pinterest",
+    "method": "GET",
+    "params": [
+      {
+        "name": "q",
+        "required": true,
+        "description": "Query"
+      }
+    ]
+  }
+]

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>KuroNeko | Dashboard</title>
+<link id="favicon" rel="icon" href="">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/landing/landing.css">
+</head>
+<body class="antialiased">
+
+<div class="bg-blobs" aria-hidden="true">
+<div class="blob blob-a"></div>
+<div class="blob blob-b"></div>
+<div class="blob blob-c"></div>
+</div>
+
+<div id="app">
+
+<header id="site-header" class="site-header">
+<div class="header-inner">
+<button id="menu-toggle" class="icon-btn" aria-label="Buka menu" aria-expanded="false" aria-controls="sidebar">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+<div class="header-brand">
+<img id="header-logo" alt="" class="header-logo hidden">
+<span id="header-name" class="header-name">KuroNeko</span>
+</div>
+<div class="header-actions">
+<a id="btn-channel" href="#" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp Channel">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-8.5 8.5c-1.35 0-2.6-.32-3.7-.9L4 20l1-4.6A8.46 8.46 0 013.5 11.5 8.5 8.5 0 0112 3a8.5 8.5 0 019 8.5z"/></svg>
+</a>
+<a id="btn-source" href="#" target="_blank" rel="noopener" class="icon-btn" aria-label="Source Code">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg>
+</a>
+<button onclick="share()" class="icon-btn" aria-label="Bagikan">
+<svg id="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 14v5a2 2 0 002 2h12a2 2 0 002-2v-5"/></svg>
+</button>
+</div>
+</div>
+</header>
+
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+<aside id="sidebar" class="sidebar" aria-hidden="true">
+<div class="sidebar-head">
+<div class="header-brand">
+<img id="sidebar-logo" alt="" class="header-logo hidden">
+<span id="sidebar-name" class="header-name">KuroNeko</span>
+</div>
+<button id="sidebar-close" class="icon-btn" aria-label="Tutup menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+</div>
+
+<nav class="sidebar-nav">
+<a href="/docs" class="nav-item">
+<span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C4 4.67 4.67 4 5.5 4H12v16H5.5A1.5 1.5 0 014 18.5v-13z"/><path d="M20 5.5c0-.83-.67-1.5-1.5-1.5H12v16h6.5a1.5 1.5 0 001.5-1.5v-13z"/></svg></span>
+<span class="nav-text">
+<span class="nav-title">Docs</span>
+<span class="nav-caption">API Reference</span>
+</span>
+<span class="nav-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+</a>
+<a href="/stats" class="nav-item">
+<span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></span>
+<span class="nav-text">
+<span class="nav-title">Stats</span>
+<span class="nav-caption">Usage &amp; Metrics</span>
+</span>
+<span class="nav-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+</a>
+</nav>
+
+<div class="sidebar-divider"></div>
+<p class="sidebar-footer">Powered by <span class="sidebar-footer-accent">Danzz</span> &bull; 2026</p>
+</aside>
+
+<main id="main-content" class="main-content">
+
+<div id="loader" class="loader">
+<div class="clay-shimmer loader-thumb"></div>
+<div class="clay-shimmer loader-line-lg"></div>
+<div class="clay-shimmer loader-line-sm"></div>
+<div class="clay-shimmer loader-line-xs"></div>
+</div>
+
+<div id="content" class="content hidden">
+<div class="reveal thumb-wrap">
+<img id="dash-thumb" alt="Cover" class="thumb-img">
+</div>
+<div class="reveal hero-text text-center">
+<h1 id="dash-title" class="hero-title"></h1>
+<div class="hero-underline"></div>
+<p id="dash-desc" class="hero-desc"></p>
+</div>
+<div class="reveal footer-credit">
+<p>Powered by <span class="footer-accent">Danzz</span> &bull; 2026</p>
+</div>
+</div>
+
+</main>
+
+</div>
+
+<script src="/landing/landing.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Brat Generator",
+    "endpoint": "/api/maker/brat",
+    "filename": "brat",
+    "method": "GET",
+    "params": [
+      {
+        "name": "text",
+        "required": true,
+        "description": "Text"
+      }
+    ]
+  }
+]
