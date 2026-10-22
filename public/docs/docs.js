@@ -39,6 +39,7 @@ async function init() {
         setUi(globalConfig);
         buildSidebarTree(globalConfig.tags);
         renderIntro(globalConfig);
+        observeReveals();
         startWIBClock();
         initBattery();
         initDevice();
@@ -49,6 +50,17 @@ async function init() {
             <span class="text-red-400 font-bold">SYSTEM FAILURE</span><br>
             ${e.message}
         `;
+
+        const intro = document.getElementById("intro-view");
+
+        if (intro) {
+            intro.classList.add("in");
+            intro.innerHTML = `
+                <p class="text-sm font-bold" style="color:#B91C1C">
+                    Gagal memuat konfigurasi API. Coba muat ulang halaman.
+                </p>
+            `;
+        }
     }
 }
 
@@ -449,6 +461,12 @@ function renderIntro(config) {
         : "/api/info/ping";
 
     const apiName = config.settings.apiName || "KuroNeko API";
+    const apiVersion = config.settings.apiVersion || "1.0.0";
+
+    const totalEndpoints = cats.reduce(
+        (total, cat) => total + config.tags[cat].length,
+        0
+    );
 
     exampleSnippets = buildExampleSnippets(
         origin,
@@ -500,35 +518,47 @@ function renderIntro(config) {
 
     el.innerHTML = `
         <div class="mb-5">
-            <h2
-                class="font-black text-xl"
-                style="color:#1E1B4B"
-            >
+            <h2 class="font-black text-xl" style="color:#1E1B4B">
                 Introduction
             </h2>
 
-            <p
-                class="text-xs font-bold"
-                style="color:#94A3B8"
-            >
+            <p class="text-xs font-bold" style="color:#94A3B8">
                 Quick guide to using ${apiName}
             </p>
         </div>
 
-        <p
-            class="text-sm leading-relaxed font-semibold mb-6"
-            style="color:#475569"
-        >
+        <div class="intro-stats">
+            <div class="intro-stat">
+                <b>${totalEndpoints}</b>
+                <span>Endpoint</span>
+            </div>
+
+            <div class="intro-stat">
+                <b>${cats.length}</b>
+                <span>Kategori</span>
+            </div>
+
+            <div class="intro-stat">
+                <b>${apiVersion}</b>
+                <span>Versi</span>
+            </div>
+        </div>
+
+        <p class="text-sm leading-relaxed font-semibold mb-5" style="color:#475569">
             Welcome to the ${apiName} documentation.
-            Open the menu in the top-left corner to browse
-            endpoints grouped by category, then select one
-            to view its details and try it out directly from here.
+            Browse endpoints grouped by category from the menu,
+            then select one to view its details and try it out directly from here.
         </p>
 
-        <h3
-            class="font-black text-sm mb-2"
-            style="color:#1E1B4B"
+        <button
+            onclick="openSidebar()"
+            class="clay-btn purple mobile-only h-11 px-5 text-[12px] tracking-wide mb-7"
         >
+            <i class="fa-solid fa-list text-xs"></i>
+            BUKA DAFTAR ENDPOINT
+        </button>
+
+        <h3 class="font-black text-sm mb-2" style="color:#1E1B4B">
             Example Usage
         </h3>
 
@@ -536,88 +566,60 @@ function renderIntro(config) {
             ${tabsHtml}
         </div>
 
-        <div
-            class="intro-code"
-            id="example-code"
-        ></div>
+        <div class="intro-code" id="example-code"></div>
 
-        <h3
-            class="font-black text-sm mb-2"
-            style="color:#1E1B4B"
-        >
+        <h3 class="font-black text-sm mb-3" style="color:#1E1B4B">
             Response Format
         </h3>
 
         <div class="resp-examples">
             <div class="resp-card">
                 <div class="resp-head">
-                    <span class="resp-badge ok">
-                        200 OK
-                    </span>
-                    <span class="resp-label">
-                        Success
-                    </span>
+                    <span class="resp-badge ok">200 OK</span>
+                    <span class="resp-label">Success</span>
                 </div>
 
-                <div
-                    class="resp-code"
-                    id="resp-success"
-                ></div>
+                <div class="resp-code" id="resp-success"></div>
             </div>
 
             <div class="resp-card">
                 <div class="resp-head">
-                    <span class="resp-badge err">
-                        500 Internal Server Error
-                    </span>
-                    <span class="resp-label">
-                        Error
-                    </span>
+                    <span class="resp-badge err">500 Internal Server Error</span>
+                    <span class="resp-label">Error</span>
                 </div>
 
-                <div
-                    class="resp-code"
-                    id="resp-error"
-                ></div>
+                <div class="resp-code" id="resp-error"></div>
             </div>
 
             <div class="resp-card">
                 <div class="resp-head">
-                    <span class="resp-badge limit">
-                        429 Too Many Requests
-                    </span>
-                    <span class="resp-label">
-                        Rate Limited
-                    </span>
+                    <span class="resp-badge limit">429 Too Many Requests</span>
+                    <span class="resp-label">Rate Limited</span>
                 </div>
 
-                <div
-                    class="resp-code"
-                    id="resp-ratelimit"
-                ></div>
+                <div class="resp-code" id="resp-ratelimit"></div>
             </div>
         </div>
 
-        <h3
-            class="font-black text-sm mb-2 mt-6"
-            style="color:#1E1B4B"
-        >
+        <h3 class="font-black text-sm mb-3 mt-7" style="color:#1E1B4B">
             Status Codes
         </h3>
 
-        <table class="status-table">
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Status</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
+        <div class="table-wrap">
+            <table class="status-table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                ${rowsHtml}
-            </tbody>
-        </table>
+                <tbody>
+                    ${rowsHtml}
+                </tbody>
+            </table>
+        </div>
     `;
 
     document.getElementById("example-code").innerText =
@@ -776,6 +778,18 @@ function selectEndpoint(id) {
         .getElementById("sidebar-intro-btn")
         .classList.remove("active");
 
+    const catId = `cat-${route.cat.replace(/\s+/g, "-")}`;
+    const filesEl = document.getElementById(`files-${catId}`);
+    const arrowEl = document.getElementById(`arrow-${catId}`);
+
+    if (filesEl) {
+        filesEl.classList.remove("hidden");
+    }
+
+    if (arrowEl) {
+        arrowEl.classList.add("rotate-180");
+    }
+
     const btn = document.getElementById(`file-${id}`);
 
     if (btn) {
@@ -794,6 +808,7 @@ function selectEndpoint(id) {
     ev.classList.add("flex");
 
     closeSidebar();
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 window.backToIntro = () => {
@@ -814,6 +829,8 @@ window.backToIntro = () => {
     document
         .getElementById("sidebar-intro-btn")
         .classList.add("active");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 function renderEndpointCard(route, id) {
@@ -837,7 +854,7 @@ function renderEndpointCard(route, id) {
 
     if (route.params?.length) {
         inputs = `
-            <div class="grid gap-3 px-5 pb-5">
+            <div class="param-grid">
                 ${route.params
                     .map(
                         param => `
@@ -862,6 +879,7 @@ function renderEndpointCard(route, id) {
                                         "Masukkan nilai..."
                                     }"
                                     class="clay-input"
+                                    autocomplete="off"
                                 >
                             </div>
                         `
@@ -880,13 +898,21 @@ function renderEndpointCard(route, id) {
                     ? "delete"
                     : "other";
 
+    const descHtml = route.description
+        ? `
+            <p class="text-xs font-semibold mt-3 leading-relaxed" style="color:#64748B">
+                ${route.description}
+            </p>
+        `
+        : "";
+
     ev.innerHTML = `
         <button
             class="back-btn w-fit"
             onclick="backToIntro()"
         >
             <i class="fa-solid fa-arrow-left"></i>
-            Semua Endpoint
+            Kembali ke Introduction
         </button>
 
         <div class="ep-card reveal in">
@@ -899,27 +925,26 @@ function renderEndpointCard(route, id) {
                     <span>${route.cat}</span>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-start gap-3">
                     <span class="method-badge ${methodClass}">
                         ${route.method}
                     </span>
 
-                    <div class="flex flex-col min-w-0">
-                        <code
-                            class="font-bold text-[13px] truncate"
-                            style="color:#1E1B4B"
-                        >
+                    <div class="flex flex-col min-w-0 gap-1">
+                        <code class="ep-url">
                             ${route.endpoint}
                         </code>
 
                         <span
-                            class="text-[11px] font-semibold truncate"
+                            class="text-[11px] font-semibold"
                             style="color:#94A3B8"
                         >
                             ${route.name}
                         </span>
                     </div>
                 </div>
+
+                ${descHtml}
             </div>
 
             ${inputs}
@@ -941,6 +966,7 @@ function renderEndpointCard(route, id) {
                     onclick="copy('${copyUrl}')"
                     class="clay-icon-btn"
                     title="Copy URL"
+                    aria-label="Copy URL"
                 >
                     <i class="fa-regular fa-copy"></i>
                 </button>
@@ -975,24 +1001,27 @@ function renderEndpointCard(route, id) {
                     </span>
                 </div>
 
-                <div class="flex justify-end gap-3 px-4 pt-2">
+                <div class="flex justify-end gap-4 px-4 pt-2">
                     <a
                         id="dl-btn-${id}"
-                        class="hidden text-emerald-400 text-xs"
+                        class="hidden text-emerald-400 text-sm"
+                        aria-label="Download"
                     >
                         <i class="fa-solid fa-download"></i>
                     </a>
 
                     <button
                         onclick="copyRes('${id}')"
-                        class="text-sky-400 text-xs"
+                        class="text-sky-400 text-sm"
+                        aria-label="Copy response"
                     >
                         <i class="fa-regular fa-clone"></i>
                     </button>
 
                     <button
                         onclick="reset('${id}')"
-                        class="text-rose-400 text-xs"
+                        class="text-rose-400 text-sm"
+                        aria-label="Reset"
                     >
                         <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -1000,7 +1029,7 @@ function renderEndpointCard(route, id) {
 
                 <div
                     id="output-${id}"
-                    class="font-mono text-[11px] overflow-x-auto whitespace-pre-wrap break-all max-h-[300px] p-4 text-slate-300 leading-relaxed"
+                    class="font-mono text-[11px] overflow-auto whitespace-pre-wrap break-all max-h-[360px] p-4 text-slate-300 leading-relaxed"
                 ></div>
             </div>
         </div>
@@ -1023,10 +1052,17 @@ function setupSidebarEvents() {
     document.addEventListener("keydown", e => {
         if (e.key === "Escape") closeSidebar();
     });
+
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+
+    desktopQuery.addEventListener("change", e => {
+        if (e.matches) closeSidebar();
+    });
 }
 
 function openSidebar() {
     document.getElementById("sidebar").classList.add("open");
+
     document
         .getElementById("sidebar-overlay")
         .classList.add("show");
@@ -1035,15 +1071,12 @@ function openSidebar() {
         .getElementById("menu-toggle")
         .setAttribute("aria-expanded", "true");
 
-    document
-        .getElementById("sidebar")
-        .setAttribute("aria-hidden", "false");
-
     document.body.style.overflow = "hidden";
 }
 
 function closeSidebar() {
     document.getElementById("sidebar").classList.remove("open");
+
     document
         .getElementById("sidebar-overlay")
         .classList.remove("show");
@@ -1051,10 +1084,6 @@ function closeSidebar() {
     document
         .getElementById("menu-toggle")
         .setAttribute("aria-expanded", "false");
-
-    document
-        .getElementById("sidebar")
-        .setAttribute("aria-hidden", "true");
 
     document.body.style.overflow = "";
 }
@@ -1083,6 +1112,7 @@ function setSearch() {
 
             if (noResults) {
                 noResults.classList.add("hidden");
+                noResults.classList.remove("flex");
             }
 
             return;
@@ -1173,6 +1203,40 @@ window.reset = id => {
 window.testReq = async (btn, url, method, id) => {
     if (btn.disabled) return;
 
+    const params = {};
+
+    document
+        .querySelectorAll(`[id^="input-${id}-"]`)
+        .forEach(input => {
+            const value = input.value.trim();
+
+            if (value) {
+                params[
+                    input.id.split(`input-${id}-`)[1]
+                ] = value;
+            }
+        });
+
+    const route = routesById[id];
+
+    const missing = (route?.params || []).filter(
+        param => param.required && !params[param.name]
+    );
+
+    if (missing.length) {
+        messeg(`ISI DULU: ${missing.map(param => param.name).join(", ")}`);
+
+        const firstInput = document.getElementById(
+            `input-${id}-${missing[0].name}`
+        );
+
+        if (firstInput) {
+            firstInput.focus();
+        }
+
+        return;
+    }
+
     const out = document.getElementById(`output-${id}`);
     const status = document.getElementById(`status-${id}`);
     const statusDot = document.getElementById(`status-dot-${id}`);
@@ -1202,18 +1266,6 @@ window.testReq = async (btn, url, method, id) => {
             establishing connection...
         </span>
     `;
-
-    const params = {};
-
-    document
-        .querySelectorAll(`[id^="input-${id}-"]`)
-        .forEach(input => {
-            if (input.value) {
-                params[
-                    input.id.split(`input-${id}-`)[1]
-                ] = input.value;
-            }
-        });
 
     const fetchUrl =
         url +
