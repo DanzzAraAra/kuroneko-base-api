@@ -26,6 +26,14 @@ function observeReveals(root) {
     });
 }
 
+function scrollToContent() {
+    const el = document.getElementById("content-col");
+
+    if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
 async function init() {
     observeReveals();
     setupSidebarEvents();
@@ -808,7 +816,7 @@ function selectEndpoint(id) {
     ev.classList.add("flex");
 
     closeSidebar();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToContent();
 }
 
 window.backToIntro = () => {
@@ -830,7 +838,7 @@ window.backToIntro = () => {
         .getElementById("sidebar-intro-btn")
         .classList.add("active");
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToContent();
 };
 
 function renderEndpointCard(route, id) {
