@@ -552,19 +552,11 @@ function renderIntro(config) {
             </div>
         </div>
 
-        <p class="text-sm leading-relaxed font-semibold mb-5" style="color:#475569">
+        <p class="text-sm leading-relaxed font-semibold mb-7" style="color:#475569">
             Welcome to the ${apiName} documentation.
             Browse endpoints grouped by category from the menu,
             then select one to view its details and try it out directly from here.
         </p>
-
-        <button
-            onclick="openSidebar()"
-            class="clay-btn purple mobile-only h-11 px-5 text-[12px] tracking-wide mb-7"
-        >
-            <i class="fa-solid fa-list text-xs"></i>
-            BUKA DAFTAR ENDPOINT
-        </button>
 
         <h3 class="font-black text-sm mb-2" style="color:#1E1B4B">
             Example Usage
@@ -915,14 +907,6 @@ function renderEndpointCard(route, id) {
         : "";
 
     ev.innerHTML = `
-        <button
-            class="back-btn w-fit"
-            onclick="backToIntro()"
-        >
-            <i class="fa-solid fa-arrow-left"></i>
-            Kembali ke Introduction
-        </button>
-
         <div class="ep-card reveal in">
             <div class="p-5">
                 <div
