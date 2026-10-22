@@ -24,10 +24,6 @@
         </button>
 
         <div class="brand">
-            <div class="brand-logo">
-                <i class="fa-solid fa-paw"></i>
-            </div>
-
             <div class="min-w-0">
                 <h1 id="nav-title" class="brand-title">KURONEKO</h1>
                 <span class="brand-sub">API PLATFORM</span>
@@ -82,14 +78,9 @@
     </aside>
 
     <main class="main-area">
-        <div class="content-grid">
+        <div class="content-stack">
 
-            <section class="content-col">
-                <div id="intro-view" class="clay-card p-5 sm:p-7 reveal"></div>
-                <div id="endpoint-view" class="hidden flex-col gap-4"></div>
-            </section>
-
-            <aside class="info-col">
+            <div class="top-row">
                 <div class="clay-console reveal">
                     <div class="clay-console-screen term-screen">
                         <div class="px-4 py-3 flex items-center gap-2 border-b border-white/10">
@@ -114,7 +105,7 @@
                     </div>
                 </div>
 
-                <div class="clay-card p-4 sm:p-5 reveal">
+                <div class="clay-card stats-card p-4 sm:p-5 reveal">
                     <div class="stat-grid">
                         <div class="stat-tile">
                             <span class="stat-label">
@@ -149,7 +140,12 @@
                         </div>
                     </div>
                 </div>
-            </aside>
+            </div>
+
+            <section id="content-col" class="content-col">
+                <div id="intro-view" class="clay-card p-5 sm:p-7 reveal"></div>
+                <div id="endpoint-view" class="hidden flex-col gap-4"></div>
+            </section>
 
         </div>
     </main>
